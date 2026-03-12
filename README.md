@@ -5,6 +5,10 @@
 [![Status](https://img.shields.io/badge/Status-Production%20Ready-success)](.)
 [![Python](https://img.shields.io/badge/Python-3.8+-blue)](.)
 [![License](https://img.shields.io/badge/License-MIT-green)](.)
+[![Version](https://img.shields.io/badge/Version-1.3.0-orange)](.)
+[![OpenClaw](https://img.shields.io/badge/OpenClaw-Skill-blueviolet)](.)
+
+[English](README_EN.md) | 简体中文
 
 ---
 
