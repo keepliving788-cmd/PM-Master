@@ -1,0 +1,90 @@
+{
+  "name": "feishu-kb",
+  "version": "1.2.0",
+  "description": "收钱吧产品专家 - 提供产品咨询、产品知识查询、功能解答服务。涵盖国内业务（扫码王、收钱吧APP、聚合支付等）及海外业务（马来西亚Beez、墨西哥MUWE、越南LitPay、新加坡等），支持产品白皮书、技术方案、业务规划等全方位产品问题解答",
+  "author": "SQB Team",
+  "type": "query",
+  "entry": "skill_main.py",
+  "dependencies": {
+    "python": ">=3.8",
+    "packages": [
+      "flask",
+      "numpy",
+      "scikit-learn",
+      "rank-bm25",
+      "jieba",
+      "lark-oapi",
+      "loguru",
+      "pyyaml"
+    ]
+  },
+  "commands": [
+    {
+      "name": "search",
+      "description": "搜索知识库",
+      "usage": "/feishu-kb search <查询内容>",
+      "examples": [
+        "/feishu-kb search 扫码王",
+        "/feishu-kb search 收钱吧APP功能",
+        "/feishu-kb search 产品白皮书"
+      ]
+    },
+    {
+      "name": "learn",
+      "description": "学习单个飞书文档（增量更新）",
+      "usage": "/feishu-kb learn <文档URL或ID>",
+      "examples": [
+        "/feishu-kb learn https://xxx.feishu.cn/docx/xxxxx",
+        "/feishu-kb learn doxcnxxxxxx"
+      ]
+    },
+    {
+      "name": "update",
+      "description": "更新知识库索引（全量更新）",
+      "usage": "/feishu-kb update",
+      "examples": [
+        "/feishu-kb update"
+      ]
+    },
+    {
+      "name": "status",
+      "description": "查看知识库状态",
+      "usage": "/feishu-kb status",
+      "examples": [
+        "/feishu-kb status"
+      ]
+    }
+  ],
+  "config": {
+    "feishu_app_id": {
+      "type": "string",
+      "description": "飞书应用ID",
+      "required": true,
+      "env": "FEISHU_APP_ID"
+    },
+    "feishu_app_secret": {
+      "type": "string",
+      "description": "飞书应用Secret",
+      "required": true,
+      "env": "FEISHU_APP_SECRET",
+      "secret": true
+    },
+    "feishu_wiki_space_id": {
+      "type": "string",
+      "description": "飞书知识库空间ID",
+      "required": true,
+      "env": "FEISHU_WIKI_SPACE_ID"
+    },
+    "wiki_token": {
+      "type": "string",
+      "description": "飞书知识库Wiki Token",
+      "required": false,
+      "env": "FEISHU_WIKI_TOKEN",
+      "default": "N9kgwANVwifcisk9UT6cDOFInRe"
+    }
+  },
+  "setup": {
+    "install": "pip install -r requirements.txt",
+    "init": "python3 setup_skill.py"
+  }
+}

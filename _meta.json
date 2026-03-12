@@ -1,0 +1,5 @@
+{
+  "name": "feishu-kb",
+  "version": "1.2.0",
+  "entry": "skill_main.py"
+}

@@ -1,0 +1,129 @@
+# 飞书配置
+feishu:
+  app_id: ${FEISHU_APP_ID}
+  app_secret: ${FEISHU_APP_SECRET}
+  wiki_space_id: ${FEISHU_WIKI_SPACE_ID}
+  api_base_url: https://open.feishu.cn/open-apis
+
+  # 请求配置
+  timeout: 30
+  max_retries: 3
+  retry_delay: 1
+
+# 索引配置
+indexing:
+  # 文档分块
+  chunking:
+    strategy: recursive  # fixed | recursive | semantic
+    chunk_size: 512
+    chunk_overlap: 50
+    separators:
+      - "\n\n"
+      - "\n"
+      - "。"
+      - "！"
+      - "？"
+      - "；"
+      - " "
+
+  # Embedding 模型
+  embedding:
+    model_name: moka-ai/m3e-base  # 高精度中文优化模型
+    model_type: local  # local | openai
+    batch_size: 32
+    normalize: true
+    dimension: 768  # m3e-base输出维度
+    device: auto  # auto | cpu | cuda
+
+    # 备选模型（可在.env中覆盖）
+    # paraphrase-multilingual-MiniLM-L12-v2 - 轻量级多语言
+    # paraphrase-multilingual-mpnet-base-v2 - 平衡型多语言
+    # BAAI/bge-large-zh-v1.5 - 最高精度中文
+
+  # 并行处理
+  parallel:
+    enabled: true
+    max_workers: 4
+
+# 检索配置
+retrieval:
+  # 混合检索权重
+  weights:
+    vector: 0.6
+    keyword: 0.4
+
+  # 向量检索
+  vector_search:
+    similarity_metric: cosine  # cosine | l2 | ip
+    similarity_threshold: 0.7
+    top_k: 10
+
+  # 关键词检索
+  keyword_search:
+    algorithm: bm25
+    k1: 1.5
+    b: 0.75
+    top_k: 10
+
+  # 混合检索融合
+  fusion:
+    method: rrf  # rrf | linear | reciprocal
+    rrf_k: 60
+
+  # 重排序
+  rerank:
+    enabled: true  # 启用重排序提升精度
+    model: BAAI/bge-reranker-base  # 中文优化的reranker
+    # 备选: cross-encoder/ms-marco-MiniLM-L-6-v2 (多语言)
+    top_k: 10  # 重排序后返回的结果数
+    batch_size: 16
+    initial_top_k: 30  # 初排序获取的候选数量
+
+# 存储配置
+storage:
+  # 数据目录
+  data_dir: ./data
+  raw_dir: ./data/raw
+  processed_dir: ./data/processed
+
+  # ChromaDB
+  chromadb:
+    persist_directory: ./data/chromadb
+    collection_name: feishu_pkb
+    embedding_function: auto
+
+  # 缓存
+  cache:
+    enabled: true
+    ttl: 3600  # 秒
+    max_size: 1000
+
+# 日志配置
+logging:
+  level: INFO
+  format: "<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan> - <level>{message}</level>"
+  rotation: "100 MB"
+  retention: "30 days"
+
+  # 输出
+  handlers:
+    - sink: stderr
+      level: INFO
+    - sink: ./logs/feishu-pkb.log
+      level: DEBUG
+      rotation: "00:00"
+
+# 性能配置
+performance:
+  # 批处理
+  batch_processing:
+    enabled: true
+    batch_size: 50
+
+  # 内存管理
+  memory:
+    max_memory_usage: 4096  # MB
+    gc_threshold: 0.8
+
+  # 进度显示
+  progress_bar: true

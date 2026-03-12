@@ -1,0 +1,78 @@
+name: feishu-pkb-retrieval
+version: 1.0.0
+description: 飞书产品知识库离线检索工具
+author: Your Name
+
+commands:
+  # 1. 索引构建命令
+  - name: index
+    description: 从飞书知识库构建离线索引
+    usage: /feishu-pkb index [--full|--incremental]
+    script: python src/main.py index
+
+  - name: sync
+    description: 同步飞书知识库最新内容
+    usage: /feishu-pkb sync
+    script: python src/main.py sync
+
+  # 2. 检索命令
+  - name: search
+    description: 在知识库中检索内容
+    usage: /feishu-pkb search <query> [--top-k=5] [--mode=hybrid]
+    script: python src/main.py search
+    args:
+      - name: query
+        required: true
+        description: 搜索查询
+      - name: top-k
+        required: false
+        default: 5
+        description: 返回结果数量
+      - name: mode
+        required: false
+        default: hybrid
+        description: 检索模式 (vector|keyword|hybrid)
+
+  # 3. 文档查看命令
+  - name: view
+    description: 查看特定文档详情
+    usage: /feishu-pkb view <doc-id>
+    script: python src/main.py view
+
+  # 4. 统计命令
+  - name: stats
+    description: 显示知识库统计信息
+    usage: /feishu-pkb stats
+    script: python src/main.py stats
+
+dependencies:
+  - python >= 3.9
+  - chromadb >= 0.4.0
+  - sentence-transformers >= 2.2.0
+  - lark-oapi >= 1.2.0
+  - beautifulsoup4 >= 4.12.0
+  - rank-bm25 >= 0.2.0
+
+config:
+  # 飞书配置
+  feishu:
+    app_id: ${FEISHU_APP_ID}
+    app_secret: ${FEISHU_APP_SECRET}
+    wiki_space_id: N9kgwANVwifcisk9UT6cDOFInRe
+
+  # 索引配置
+  index:
+    chunk_size: 512
+    chunk_overlap: 50
+    embedding_model: paraphrase-multilingual-MiniLM-L12-v2
+
+  # 检索配置
+  retrieval:
+    vector_weight: 0.6
+    keyword_weight: 0.4
+    similarity_threshold: 0.7
+
+  # 存储配置
+  storage:
+    data_dir: ./data
+    persist_directory: ./data/chromadb

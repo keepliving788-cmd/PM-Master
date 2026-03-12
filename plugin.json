@@ -1,0 +1,15 @@
+{
+  "name": "feishu-kb",
+  "version": "1.2.0",
+  "description": "收钱吧产品专家 - 解答产品问题、产品咨询、功能查询。涵盖国内+海外全业务产品知识，支持图片内容理解",
+  "author": "SQB Team",
+  "type": "skill",
+  "skills": {
+    "feishu-kb": {
+      "name": "feishu-kb",
+      "description": "作为产品专家解答收钱吧产品问题、产品咨询、功能查询（支持国内+海外全业务）",
+      "entry": "skill_main.py",
+      "commands": ["search", "status", "update"]
+    }
+  }
+}

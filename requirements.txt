@@ -1,0 +1,39 @@
+# 核心依赖
+lark-oapi>=1.2.0              # 飞书官方 SDK
+chromadb>=0.4.0               # 向量数据库
+sentence-transformers>=2.2.0   # 本地 Embedding 模型
+torch>=2.0.0                   # PyTorch (sentence-transformers 依赖)
+
+# 检索增强
+rank-bm25>=0.2.0              # BM25 关键词检索
+faiss-cpu>=1.7.4              # 可选的向量检索引擎
+
+# 文档处理
+beautifulsoup4>=4.12.0        # HTML 解析
+lxml>=4.9.0                   # XML 解析
+markdown>=3.4.0               # Markdown 处理
+python-docx>=0.8.11           # Word 文档处理
+
+# 数据处理
+pandas>=2.0.0                 # 数据分析
+numpy>=1.24.0                 # 数值计算
+
+# 工具库
+pydantic>=2.0.0               # 数据验证
+pyyaml>=6.0                   # YAML 配置
+python-dotenv>=1.0.0          # 环境变量
+loguru>=0.7.0                 # 日志
+tqdm>=4.65.0                  # 进度条
+click>=8.1.0                  # CLI 工具
+
+# 高精度检索
+jieba>=0.42.0                 # 中文分词（必需）
+transformers>=4.30.0          # Transformer模型库
+einops>=0.6.1                 # tensor操作（m3e依赖）
+
+# 重排序模型（可选，用于精细排序）
+# sentence-transformers已包含cross-encoder支持
+
+# 可选：加速库
+# hnswlib>=0.7.0              # 更快的向量检索
+anthropic>=0.40.0
